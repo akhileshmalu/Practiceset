@@ -6,6 +6,15 @@ import static java.lang.Math.ceil;
  * Created by akhi on 2/21/17.
  */
 public class MapDemo {
+    Map<Character, Integer> romanVal = new HashMap<Character, Integer>(){{
+        put('I', 1);
+        put('V', 5);
+        put('X', 10);
+        put('L', 50);
+        put('C', 100);
+        put('D', 500);
+        put('M', 1000);
+    }};
 
     void mapShow() {
         Map map = new HashMap();

@@ -1,4 +1,4 @@
-package com.maloo.akhi;
+package Sorting;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import sun.jvm.hotspot.debugger.posix.elf.ELFSectionHeader;
@@ -36,7 +36,7 @@ public class Quicksort
     {
         if(start<end)
         {
-            int pindex =partition(a,start,end);
+            int pindex = partition(a,start,end);
             quicksort1(a,start, pindex-1);
             quicksort1(a,pindex+1,end);
         }

@@ -77,7 +77,7 @@ public class Palindrom {
     }
 
     public static void main(String[] args) {
-        Palindrom ex =new Palindrom();
+        Palindrom ex = new Palindrom();
         System.out.println(ex.isPalindrome("a."));
 
     }

@@ -8,7 +8,7 @@ public class quickselect {
     public static int quickselect1(int a[], int start, int end, int pos)
     {
 
-        int pivot=a[start];
+        int pivot = a[start];
         int left= start+1;
         int right = end;
 
