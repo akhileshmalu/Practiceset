@@ -1,3 +1,5 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
 import java.io.FileReader;
@@ -9,7 +11,7 @@ import java.util.*;
  * @date: 9/16/17.
  */
 public class LevenshteinDistance {
-    public static int  ins = 1, del = 3,  sub = 1, cp = 0;
+    public static int  ins = 1, del = 1,  sub = 1, cp = 0;
 
     public Set<String> dictionary = new HashSet<>();
     List<String> wd = new ArrayList<>();
@@ -19,7 +21,7 @@ public class LevenshteinDistance {
         build(System.getProperty("user.dir") + "/JavaAdvanceAlgorithm/src/dictWords.txt");
     }
 
-    public  int getMinCostToCovert(String first, String sec) {
+    public  int getEditDist(String first, String sec) {
 
         int[][] dist = new int[first.length()+1][sec.length()+1];
 
@@ -43,7 +45,9 @@ public class LevenshteinDistance {
                     dist[i][j] = ( getMinimum(
                             dist[i][j-1] + ins ,    // insertion with cost
                             dist[i-1][j-1] + sub ,  // substitution with cost
-                            dist[i-1][j] + del )    // deletion with cost
+                            dist[i-1][j] + del      // deletion with cost
+                                                        // anagram with cost #yet to implement
+                        )
                     );
 
                 }
@@ -94,7 +98,7 @@ public class LevenshteinDistance {
 
                 char s1[] = iniWord.toString().toCharArray();
                 s1[index] = str2[j-1];
-                iniWord = new StringBuffer(buildStr(s1));
+                iniWord = new StringBuffer(toString(s1));
                 words.add(iniWord.toString());
 
                 i = i-1;
@@ -172,6 +176,7 @@ public class LevenshteinDistance {
 
     }
 
+
    /* public  void minDis(String first, String sec){
         int i = 3;
         int result = 0;
@@ -183,7 +188,7 @@ public class LevenshteinDistance {
 
     }*/
 
-   public String buildStr(char[] s1) {
+   public String toString(char[] s1) {
        String str = "";
 
        for(int i=0 ; i<s1.length; i++) {
@@ -212,14 +217,14 @@ public class LevenshteinDistance {
         if(first.length != sec.length) return false;
 
         int[] ch1 = new int[26];
-        int[] ch2 = new int[26];
 
-        for(int i = 0; i< first.length || i< sec.length; i++) {
-            if(i<first.length) ch1[(first[i] - 'a')] = ++ch1[(first[i] - 'a')];
-            if(i<sec.length) ch2[(sec[i] - 'a')] = ++ch2[(sec[i] - 'a')];
+        for(int i = 0; i< first.length ; i++) {
+            ch1[(first[i] - 'a')] = ++ch1[(first[i] - 'a')];
+            ch1[(sec[i] - 'a')] = --ch1[(sec[i] - 'a')];
         }
 
-        return Arrays.equals(ch1,ch2);
+        for (int c: ch1) if(c != 0) return false;
+        return true;
     }
 
     public  int getMinimum(int a , int b, int c) {
@@ -227,59 +232,149 @@ public class LevenshteinDistance {
     }
 
 
-    public int ladderLength(String start, String end, Set<String> dict) {
-        // Use queue to help BFS
-        Queue<String> queue = new LinkedList<String>();
-        queue.add(start);
-        queue.add(null);
+//    public int ladderLength(String start, String end, Set<String> dict) {
+//        // Use queue to help BFS
+//        Queue<String> queue = new LinkedList<String>();
+//        queue.add(start);
+//        queue.add(null);
+//
+//        // Mark visited word
+//        Set<String> visited = new HashSet<String>();
+//        visited.add(start);
+//
+//        int level = 1;
+//
+//        while (!queue.isEmpty()) {
+//            String str = queue.poll();
+//
+//            if (str != null) {
+//                // Modify str's each character (so word distance is 1)
+//                for (int i = 0; i < str.length(); i++) {
+//                    char[] chars = str.toCharArray();
+//
+//                    for (char c = 'a'; c <= 'z'; c++) {
+//                        chars[i] = c;
+//
+//                        String word = new String(chars);
+//
+//                        // Found the end word
+//                        if (word.equals(end)) return level + 1;
+//
+//                        // Put it to the queue
+//                        if (dict.contains(word) && !visited.contains(word)) {
+//                            queue.add(word);
+//                            visited.add(word);
+//                        }
+//                    }
+//                }
+//            } else {
+//                level++;
+//
+//                if (!queue.isEmpty()) {
+//                    queue.add(null);
+//                }
+//            }
+//        }
+//
+//        return 0;
+//    }
 
-        // Mark visited word
-        Set<String> visited = new HashSet<String>();
-        visited.add(start);
+//    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
+//        Set<String> set1 = new HashSet<String>();
+//        set1.add(beginWord);
+//
+//        Set<String> set2 = new HashSet<String>();
+//        set2.add(endWord);
+//
+//        wordList.remove(beginWord);
+//        wordList.remove(endWord);
+//
+//        return minLengthBidirectionalSearch(set1, set2, wordList, 2);
+//    }
 
-        int level = 1;
+    public int minLengthBidirectionalSearch(Set<String> set1, Set<String> set2, Set<String> wordList, int length) {
+        if(set1.size() == 0) return 0;
 
-        while (!queue.isEmpty()) {
-            String str = queue.poll();
+        Set<String> newSet = new HashSet<String>();
 
-            if (str != null) {
-                // Modify str's each character (so word distance is 1)
-                for (int i = 0; i < str.length(); i++) {
-                    char[] chars = str.toCharArray();
-
-                    for (char c = 'a'; c <= 'z'; c++) {
-                        chars[i] = c;
-
-                        String word = new String(chars);
-
-                        // Found the end word
-                        if (word.equals(end)) return level + 1;
-
-                        // Put it to the queue
-                        if (dict.contains(word) && !visited.contains(word)) {
-                            queue.add(word);
-                            visited.add(word);
-                        }
+        for(String s : set1) {
+            char[] str = s.toCharArray();
+            for(int j = 0; j < str.length; j++) {
+                char og = str[j];
+                for(char c = 'a'; c <= 'z'; c++) {
+                    str[j] = c;
+                    String newStr = String.valueOf(str);
+                    if(set2.contains(newStr)) return length;
+                    if(wordList.contains(newStr)) {
+                        newSet.add(newStr);
+                        wordList.remove(newStr);
                     }
                 }
-            } else {
-                level++;
-
-                if (!queue.isEmpty()) {
-                    queue.add(null);
-                }
+                str[j] = og;
             }
         }
 
-        return 0;
+        // This part is KEY to bringing your run-time down. Otherwise sets with more neighbours
+        // will skew the benefit that can be obtained from searching outward from two nodes.
+        if(newSet.size() < set2.size()) {
+            return minLengthBidirectionalSearch(newSet, set2, wordList, length+1);
+        } else {
+            return minLengthBidirectionalSearch(set2, newSet, wordList, length+1);
+        }
+    }
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        int[] visited = new int[wordList.size()];
+        HashMap<String, Integer> map = new HashMap<>();
+        int res = ladderHelper( beginWord,endWord, wordList,visited,map);
+        return res;
+    }
+
+    private int ladderHelper(String beginWord, String endWord, List<String> wordList, int[] visited, HashMap<String, Integer> map) {
+        if (beginWord.equals(endWord)) return 1;
+        int bestSeen = 0;
+        for (int i = 0; i < wordList.size(); i++) {
+            if (visited[i] == 1) continue;
+            if (!validJump(beginWord, wordList.get(i))) continue;
+            if (map.containsKey(wordList.get(i))) {
+                int val = map.get(wordList.get(i));
+                if (val != 0 && (bestSeen==0 || val+ 1 < bestSeen)) bestSeen = map.get(wordList.get(i))+1;
+            }else {
+                visited[i] = 1;
+                int distance = ladderHelper(wordList.get(i), endWord, wordList, visited, map);
+                visited[i] = 0;
+                if (distance != 0 && (bestSeen == 0 || distance + 1 < bestSeen)) bestSeen = distance+1;
+            }
+        }
+        map.put(beginWord, bestSeen);
+        return bestSeen;
+    }
+
+    private boolean validJump(String a, String b) {
+        int mistakes = 0;
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) != b.charAt(i) && ++mistakes > 1) return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
 
         LevenshteinDistance lv = new LevenshteinDistance();
+        Set<String> dict = new HashSet<String>();
+        List<String> list = new ArrayList<>();
 
+        String arr[] = {"heath","heats", "hents", "hends","hands"};
+//        String arr[] = {"hot","dot","dog","lot","log","cog"};
+//
+        for(String val: arr) {
+            dict.add(val.toLowerCase());
+            list.add(val.toLowerCase());
+        }
 
-        System.out.println("Minimum Distance is "+ lv.ladderLength("health","hands",lv.dictionary));
+        System.out.println(lv.ladderLength("healths","hands",list));
+//        System.out.println(lv.checkAnagram("act".toCharArray(),"tac".toCharArray()));
+//         System.out.println("Minimum Distance is "+ lv.getEditDist("hit","cog"));
 
     }
 

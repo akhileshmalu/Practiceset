@@ -6,6 +6,8 @@ import java.util.Arrays;
  */
 public class NdimesionMatrixSum {
 
+
+
     public static void main(String[] args) {
         int[][][] matrix = new int[2][3][2];
 
