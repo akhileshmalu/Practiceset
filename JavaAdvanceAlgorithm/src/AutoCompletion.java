@@ -41,7 +41,7 @@ public class AutoCompletion {
     public void insert(String name) {
 
         TrieNode current = root;
-        for(int i=0; i<name.length(); i++) {
+        for(int i = 0; i < name.length(); i++) {
             TrieNode node = current.childNodes.get(name.charAt(i));
 
             if(node == null) {

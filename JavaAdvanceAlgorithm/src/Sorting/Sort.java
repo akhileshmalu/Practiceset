@@ -67,19 +67,7 @@ public class Sort {
         }
     }
 
-    public void mergeDivide(int[] nums, int start, int end) {
-        if(start < end) {
-            // Middle point
-            int middle = (start + end)/2;
 
-            // Sort first Half
-            mergeDivide(nums,start, middle);
-            mergeDivide(nums,middle+1, end);
-
-            // Merge both sorted array
-            mergeConqour(nums, start, middle, end);
-        }
-    }
 
     public int partition(int[] a, int start, int end) {
 
@@ -107,6 +95,20 @@ public class Sort {
             int partitionIndex = partition(a, start, end);
             quickSort(a, start, partitionIndex-1);
             quickSort(a, partitionIndex, end);
+        }
+    }
+
+    public void mergeDivide(int[] nums, int start, int end) {
+        if(start < end) {
+            // Middle point
+            int middle = (start + end)/2;
+
+            // Sort first Half
+            mergeDivide(nums,start, middle);
+            mergeDivide(nums,middle+1, end);
+
+            // Merge both sorted array
+            mergeConqour(nums, start, middle, end);
         }
     }
 
@@ -140,7 +142,7 @@ public class Sort {
     public static void main(String[] args) {
         Sort sort = new Sort();
         int nums[] = { 5,1,3,8,2};
-        sort.quickSort(nums,0,nums.length-1);
+        sort.mergeDivide(nums,0,nums.length-1);
         Arrays.stream(nums).forEach(System.out::println);
     }
 }

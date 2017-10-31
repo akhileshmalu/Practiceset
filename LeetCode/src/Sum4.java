@@ -36,6 +36,6 @@ public class Sum4 {
     public static void main(String[] args) {
         Sum4 sum4 = new Sum4();
         int[] nums = {1, 0, -1, 0, -2, 2};
-        sum4.fourSum(nums, 0);
+        sum4.fourSum(nums, 1);
     }
 }
