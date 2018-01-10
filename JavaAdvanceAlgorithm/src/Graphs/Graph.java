@@ -116,7 +116,7 @@ public class Graph {
 
         // Call the recursive helper function to print DFS traversal
         for (int i = 0; i < V; ++i)
-            if (visited[i] == false)
+            if (!visited[i])
                 DFSUtil(i, visited);
     }
     /**

@@ -202,6 +202,7 @@ public class RedBlackTree {
             rbt.insertKey(val);
         }
 
+
         System.out.println(rbt.root.data);
 
         System.out.println(rbt.rank(5));

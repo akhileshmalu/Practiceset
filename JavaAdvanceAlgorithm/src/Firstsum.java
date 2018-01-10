@@ -1,4 +1,3 @@
-package com.maloo.akhi;
 
 /**
  * Created by akhi on 8/24/16.

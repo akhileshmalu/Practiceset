@@ -224,6 +224,47 @@ public class Solution {
         return reversedWord.trim();
     }
 
+
+    public void divide(int[] num, int start, int end) {
+
+        if(start < end) {
+            int middle = (start + end) / 2;
+            divide(num, start, middle);
+            divide(num, middle+1, end);
+
+            merge(num, start, middle, end);
+        }
+
+    }
+
+    public void merge(int[] num, int start, int mid, int end) {
+
+        int[] leftSub = Arrays.copyOfRange(num, start, mid+1);
+        int[] rightSub = Arrays.copyOfRange(num, mid + 1, end + 1);
+
+        int index = start;
+        int i = 0, j = 0;
+        for(; i < leftSub.length && j < rightSub.length;) {
+            if(leftSub[i] <= rightSub[j] ) {
+                num[index++] = leftSub[i++];
+            } else {
+                num[index++] = rightSub[j++];
+            }
+        }
+        // check which is pending all copy all the values of remaining arry into num.
+        if(i == leftSub.length) {
+            while(j < rightSub.length)
+                num[index++] = rightSub[j++];
+        } else {
+            while(i < leftSub.length)
+                num[index++] = leftSub[i++];
+        }
+
+    }
+
+
+
+
     /**
      * Standard Hacker Rank StdIn StdOut Functions.
      *
@@ -231,21 +272,30 @@ public class Solution {
      */
     public static void main(String[] args) {
 
-        String s = "   a   b ";
+//
+//        int[] a = {3, 5, 2, 5, 5, 10};
+//
+//        Solution sol = new Solution();
+//        long ms = System.nanoTime();
+//
+//        sol.divide(a,0,a.length-1);
+//
+//        System.out.println(System.nanoTime()-ms);
+//
+//        Arrays.stream(a).forEach(t -> {System.out.print(t + " ");});
 
 
-        HashMap<Character, Integer> map = new HashMap<>();
+        int num = 123;
+        String bin = "";
 
-        map.put('a', 1);
-        map.put('a', 5);
-
-        int a  = -3;
-        int b = (Integer.hashCode(a) & 0x7FFFFFFF);
-
-        System.out.println(map.put('a',3));
+        while(num != 0) {
+            bin = (num % 2) + bin;
+            num = num / 2;
+        }
 
 
-//        System.out.println(revWords(s));
+        System.out.println(Integer.toBinaryString(123));
+        System.out.println(bin);
 
 
     }

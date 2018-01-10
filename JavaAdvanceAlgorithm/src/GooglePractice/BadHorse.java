@@ -71,8 +71,7 @@ public class BadHorse {
 
         while(!q.isEmpty()) {
 
-            int u = q.getFirst();
-            q.pop();
+            int u = q.poll();
 
             if(adjacencyMatrix[u][u] == 1) {
                 return false;
@@ -82,7 +81,7 @@ public class BadHorse {
 
                 if(adjacencyMatrix[u][v] == 1 && colors[v] == -1) {
                     colors[v] = 1-colors[u];
-                    q.push(v);
+                    q.add(v);
                 } else if(adjacencyMatrix[u][v] == 1 && colors[v] == colors[u])
                     return false;
 

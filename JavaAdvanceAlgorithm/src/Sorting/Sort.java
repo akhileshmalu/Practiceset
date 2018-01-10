@@ -98,6 +98,63 @@ public class Sort {
         }
     }
 
+    /**
+     *  3 way Quick Sort; If there are so many duplicate values
+     *  Partition divides array in
+     * @param num
+     * @param start
+     * @param end
+     * @return
+     */
+    public void partition3wayQS(int[] num, int start, int end, int[] pivotArr) {
+
+        int pivot = num[end];
+        int pIndex = start;
+
+        while(start < end)  {
+
+            if(num[start] < pivot) {
+                int temp = num[start];
+                num[start] = num[pIndex];
+                num[pIndex] = temp;
+                pIndex++;
+            }
+
+            start++;
+        }
+
+        int pJindex = pIndex;
+
+        // one can join duplicate count inside first loop
+        for(int k = pJindex; k <= end; ) {
+            if(num[k] == pivot) {
+                int temp = num[pJindex];
+                num[pJindex++] = num[k];
+                num[k] = temp;
+            }
+            k += 1;
+        }
+
+        pivotArr[0] = pIndex-1;
+        pivotArr[1] = pJindex;
+    }
+
+    /**
+     * If array has so many duplicate values this will be fasted Sort
+     * @param num
+     * @param start
+     * @param end
+     */
+    public void quickSort3Way(int[] num, int start, int end) {
+
+        if(start < end) {
+            int[] pivotArr = new int[2];
+            partition3wayQS(num, start, end, pivotArr);
+            quickSort(num, start, pivotArr[0]);
+            quickSort(num, pivotArr[1], end);
+        }
+    }
+
     public void mergeDivide(int[] nums, int start, int end) {
         if(start < end) {
             // Middle point
@@ -141,7 +198,8 @@ public class Sort {
 
     public static void main(String[] args) {
         Sort sort = new Sort();
-        int nums[] = { 5,1,3,8,2};
+        //int nums[] = { 5,1,3,8,2};
+        int[] nums = {3, 5, 2, 5, 5, 10};
         sort.mergeDivide(nums,0,nums.length-1);
         Arrays.stream(nums).forEach(System.out::println);
     }
