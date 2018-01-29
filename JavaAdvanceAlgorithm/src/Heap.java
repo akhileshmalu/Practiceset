@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author: Akhilesh Maloo
@@ -42,7 +39,6 @@ public class Heap implements Iterable<Integer> {
              minHeapify(i,size);
             //maxHeapify(i, size);
         }
-
     }
 
     /**
@@ -56,7 +52,6 @@ public class Heap implements Iterable<Integer> {
 
     /**
      * Create a max heap from array
-     *
      * @param i : index of parent
      * @param n : size ; used for facilitating heapsort
      */
@@ -94,7 +89,6 @@ public class Heap implements Iterable<Integer> {
             values[parent] = swap;
 
             maxHeapifyUp(parent);
-
         }
 
     }
@@ -175,11 +169,8 @@ public class Heap implements Iterable<Integer> {
     }
 
     public Node buildTreeFromHeap() {
-
         LinkedList<Node> q = new LinkedList<>();
-
         int i = 0;
-
 
         Node n = new Node(values[i]) ;
         Node root = n;
@@ -197,10 +188,8 @@ public class Heap implements Iterable<Integer> {
                 n.right = new Node(values[(2*i)+2]);
                 q.add(n.right);
             }
-
             i++;
         }
-
         return root;
     }
 
@@ -241,8 +230,9 @@ public class Heap implements Iterable<Integer> {
     }
 
     public static void main(String[] args) {
-
         int[] values = {3,2,1,6,0,5};
+
+
 
         Heap hp = new Heap(values);
         //hp.insertItemInHeap(8);

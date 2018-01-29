@@ -1,8 +1,10 @@
 package GooglePractice;
 
-import org.junit.Test;
-
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,62 +14,7 @@ import java.util.stream.Collectors;
  */
 public class Solution {
 
-
-    public static int FlowerBloom(int[] P, int K) {
-
-        // write your code in Java SE 8
-
-        TreeSet<Integer> bloomings = new TreeSet();
-        int day = 0;
-
-        for (int i = 0; i < P.length; i++) {
-            day += 1;
-            bloomings.add(P[i]);
-            Integer left = bloomings.lower(P[i]);
-            Integer right = bloomings.higher(P[i]);
-
-            if (left == null) left = 0;
-
-            if (P[i] - left - 1 == K ||
-                    right != null && right - P[i] - 1 == K)
-                return day;
-        }
-        return -1;
-    }
-
-    public static int kEmptySlots(int[] flowers, int k) {
-
-        String blooms = new String((new char[flowers.length])).replaceAll("\0", "0");
-
-        String match = new String(new char[k]).replaceAll("\0", "0");
-
-        int day = 0;
-
-        for (int flower : flowers) {
-            day++;
-            char flw[] = blooms.toCharArray();
-            flw[flower - 1] = ' ';
-
-            blooms = new String(flw);
-
-            if (blooms.matches("(.*)" + " " + match + " " + "(.*)"))
-                return day;
-
-            /*String[] group = blooms.split(" ");
-            int a = 1;
-           for(String g: group) {
-               if(g.length() == k && blooms.matches("(.*)"+" "+g+" "+"(.*)"))
-                   return day;
-           }*/
-
-        }
-        return -1;
-
-    }
-
-
     public String solution(String S) {
-        // write your code in Java SE 8
 
         String hours = S.substring(0, 2);
         String mins = S.substring(3);
@@ -100,7 +47,6 @@ public class Solution {
                 return String.format("%02d:%02d", currTime / 60, currTime % 60);
             }
         }
-
     }
 
     /**
@@ -124,9 +70,46 @@ public class Solution {
             bufferedWriter.write("Write in output file");
             bufferedWriter.newLine();
 
-
             //close both the pointers
             bufferedWriter.close();
+            reader.close();
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Helper Reading and writing STD IN/OUT
+     *
+     * @param filePath
+     * @return
+     */
+    public void StdInStdOutFilePath(String filePath, String output) {
+
+        Path src = Paths.get(filePath);
+        Path target = Paths.get(output);
+
+        Charset charSet = Charset.forName("US-ASCII");
+
+
+        try (BufferedReader reader = Files.newBufferedReader(src, charSet);
+             BufferedWriter writer = Files.newBufferedWriter(target);
+            ) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.split("\t");
+
+            }
+            // to write something on file
+            writer.write("Write in output file");
+            writer.newLine();
+
+            //close both the pointers
+            writer.close();
             reader.close();
 
         } catch (IOException ioe) {
@@ -180,90 +163,46 @@ public class Solution {
          */
     }
 
-    public static String reverseWords(String s) {
-        s = s.replaceAll("^[\\s]+", "").replaceAll("[\\s]+$", "").replaceAll("[\\s]+", " ");
 
-        if (s.equals(" ")) return "";
+    public int fibonaci(int n) {
 
-        if (s.length() > 0) {
-            String[] words = s.split("\\s");
-            s = "";
-            for (int i = words.length - 1; i >= 0; i--) {
-                if (i != words.length - 1) {
-                    s += " ";
-                }
-                s += words[i];
-            }
+        // 0 1 1 2 3 5 8 13 21      => 4th pos number is 2
+
+        if(n < 2) return n;
+
+        int last = 1;
+        int slast = 0;
+        int currPos = 2;
+
+        while(currPos < n) {
+            int sum = last + slast;
+            slast = last;
+            last = sum;
+
+            currPos++;
         }
-        return s;
+
+        return last;
     }
 
-    public static String revWords(String s) {
-        //s = s.trim();
-        char[] letters = s.toCharArray();
-
-        String reversedWord = "";
-
-        for (int i = 0; i < letters.length; i++) {
-
-            while (i < letters.length && letters[i] == ' ') {
-                i++;
-            }
-
-            if (i < letters.length) {
-                String word = "";
-                while (i < letters.length && letters[i] != ' ') {
-                    word += letters[i];
-                    i++;
-                }
-                reversedWord = " " + word + reversedWord;
-            }
-
-        }
-
-        return reversedWord.trim();
+    public int fib(int n) {
+        int[] f = new int[n];
+        fibIterative(n-1, f);
+        return f[n-1];
     }
 
-
-    public void divide(int[] num, int start, int end) {
-
-        if(start < end) {
-            int middle = (start + end) / 2;
-            divide(num, start, middle);
-            divide(num, middle+1, end);
-
-            merge(num, start, middle, end);
+    public int fibIterative(int n, int[] f) {
+        if(n < 2) {
+            f[n] = n;
+            return n;
         }
 
+        if(f[n] == 0) {
+            f[n] = fibIterative(n-1, f) + fibIterative(n-2, f);
+        }
+
+        return f[n];
     }
-
-    public void merge(int[] num, int start, int mid, int end) {
-
-        int[] leftSub = Arrays.copyOfRange(num, start, mid+1);
-        int[] rightSub = Arrays.copyOfRange(num, mid + 1, end + 1);
-
-        int index = start;
-        int i = 0, j = 0;
-        for(; i < leftSub.length && j < rightSub.length;) {
-            if(leftSub[i] <= rightSub[j] ) {
-                num[index++] = leftSub[i++];
-            } else {
-                num[index++] = rightSub[j++];
-            }
-        }
-        // check which is pending all copy all the values of remaining arry into num.
-        if(i == leftSub.length) {
-            while(j < rightSub.length)
-                num[index++] = rightSub[j++];
-        } else {
-            while(i < leftSub.length)
-                num[index++] = leftSub[i++];
-        }
-
-    }
-
-
-
 
     /**
      * Standard Hacker Rank StdIn StdOut Functions.
@@ -272,30 +211,14 @@ public class Solution {
      */
     public static void main(String[] args) {
 
-//
-//        int[] a = {3, 5, 2, 5, 5, 10};
-//
-//        Solution sol = new Solution();
-//        long ms = System.nanoTime();
-//
-//        sol.divide(a,0,a.length-1);
-//
-//        System.out.println(System.nanoTime()-ms);
-//
-//        Arrays.stream(a).forEach(t -> {System.out.print(t + " ");});
+        Solution sol = new Solution();
+        //90f6cd7d-4d59-41a5-b7d0-693bb49a3bbc
 
 
-        int num = 123;
-        String bin = "";
-
-        while(num != 0) {
-            bin = (num % 2) + bin;
-            num = num / 2;
-        }
+        //Potassium - MY -Z-  trimer
 
 
-        System.out.println(Integer.toBinaryString(123));
-        System.out.println(bin);
+        //uranium
 
 
     }

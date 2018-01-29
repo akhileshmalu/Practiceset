@@ -45,8 +45,21 @@ public class ReverseLinkedList {
         }
     }
 
-    public static void main(String[] args) {
+    public void reverseRecurr(Node node) {
 
+
+        if(node.next == null) {
+            head = node;
+            return;
+        }
+        reverseRecurr(node.next);
+
+        node.next.next = node;
+        node.next = null;
+
+    }
+
+    public static void main(String[] args) {
 
         ReverseLinkedList list = new ReverseLinkedList();
         head = new Node(85);
@@ -56,7 +69,7 @@ public class ReverseLinkedList {
 
         System.out.println("Given Linked list");
         list.printList(head);
-        head = list.reverse(head);
+        list.reverseRecurr(head);
         System.out.println("");
         System.out.println("Reversed linked list ");
         list.printList(head);

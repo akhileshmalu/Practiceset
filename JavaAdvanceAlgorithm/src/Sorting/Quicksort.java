@@ -1,7 +1,7 @@
 package Sorting;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import sun.jvm.hotspot.debugger.posix.elf.ELFSectionHeader;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Created by akhi on 9/7/16.
@@ -32,6 +32,7 @@ public class Quicksort
             }
 
         }
+
         int temp  = a[pindex];
         a[pindex] = pivot;
         a[end]    = temp;
@@ -62,6 +63,10 @@ public class Quicksort
         quicksort1(a,0,a.length-1);
 
         System.out.println(System.nanoTime()-ms);
+        //HashSet<Integer> as = new HashSet<>();
+
+
+
         for (int i=0;i<a.length;i++)
         {
             System.out.print(a[i] + " ");

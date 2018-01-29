@@ -12,7 +12,6 @@ public class LowestCommonAncestor extends RedBlackTree {
         Node curr = root;
 
         while(curr != null) {
-
             if(curr.data == val)
                 return curr;
 
@@ -26,6 +25,8 @@ public class LowestCommonAncestor extends RedBlackTree {
         return root;
     }
 
+    /*
+    * Better & Faster implementation below
     public LinkedList<Integer> track(Node n) {
 
         LinkedList<Integer> st = new LinkedList<>();
@@ -42,7 +43,6 @@ public class LowestCommonAncestor extends RedBlackTree {
 
         return st;
     }
-
 
     public int lowestCommonAncestors(int l, int m) {
 
@@ -65,6 +65,30 @@ public class LowestCommonAncestor extends RedBlackTree {
         return b;
 
     }
+    */
+
+    public int lowestCommonAncestors(int i, int j) {
+
+        Node curr = root;
+
+        while(curr != null) {
+
+            if(curr.data >= i && curr.data <= j) {
+                return curr.data;
+            }
+
+            if(curr.data < i) {
+                curr = curr.right;
+            }
+
+            if(curr.data > j) {
+                curr = curr.left;
+            }
+
+        }
+
+        return -1;
+    }
 
     public static void main(String[] args) {
 
@@ -76,7 +100,9 @@ public class LowestCommonAncestor extends RedBlackTree {
             bst.insertKey(v);
         }
 
-        System.out.println(bst.lowestCommonAncestors(1,7));
+        //System.out.println(bst.lowestCommonAncestors(9,13));
+
+        System.out.println(bst.lowestCommonAncestors(9,13));
 
     }
 
