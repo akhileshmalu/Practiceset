@@ -1,8 +1,6 @@
 package Graphs;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @author: Akhilesh Maloo
@@ -76,6 +74,7 @@ public class Graph {
 
     /**
      * If there is any Path from src node to dest node using DFS
+     *
      * @param src
      * @param dest
      * @return
@@ -98,7 +97,7 @@ public class Graph {
         while (i.hasNext()) {
             int n = i.next();
             if (!visited[n])
-                if(DFSUtilPath(n, dest, visited)) return true;
+                if (DFSUtilPath(n, dest, visited)) return true;
         }
 
         return false;
@@ -107,6 +106,7 @@ public class Graph {
 
     /**
      * DFS Driver method
+     *
      * @param v
      */
     void DFS(int v) {
@@ -119,8 +119,10 @@ public class Graph {
             if (!visited[i])
                 DFSUtil(i, visited);
     }
+
     /**
      * Traverse Depth First Search
+     *
      * @param v
      * @param visited
      */
@@ -139,23 +141,110 @@ public class Graph {
     }
 
 
-    public static void main(String[] args) {
+    boolean detectCycle(int k) {
 
-        Graph g = new Graph(4);
+        return detectCyCleDFS(k, new HashSet<Integer>(), new HashSet<Integer>());
+    }
 
-        g.addEdge(0, 2);
-        g.addEdge(0, 1);
-        g.addEdge(1, 2);
-//        g.addEdge(2, 0);
-        g.addEdge(2, 3);
-        g.addEdge(3, 3);
+    boolean detectCyCleDFS(int k, HashSet<Integer> visited, HashSet<Integer> current) {
 
-        System.out.println("Following is Depth First Traversal " +
-                "(starting from vertex 2)");
+        visited.add(k);
+        current.add(k);
 
-        System.out.println(g.hasPath(2, 3));
-//        g.DFS(2);
+        for (int i = 0; i < adjacency[k].size(); i++) {
+
+            int tmp = adjacency[k].get(i);
+            if(!visited.contains(tmp) && detectCyCleDFS(tmp, visited, current)) {
+                return true;
+            } else {
+                if(current.contains(tmp))
+                    return true;
+            }
+
+        }
+        current.remove(k);
+        return false;
+    }
+
+    /**
+     * for clone graph purpose
+     */
+    class UndirectedGraphNode {
+        int label;
+        List<UndirectedGraphNode> neighbors;
+        UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+      }
+
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node == null) {
+            return null;
+        }
+        return helper(node, new HashMap<Integer, UndirectedGraphNode>());
+    }
+    public UndirectedGraphNode helper(UndirectedGraphNode node, HashMap<Integer, UndirectedGraphNode> map) {
+        if(map.containsKey(node.label)) {
+            return map.get(node.label);
+        }
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        map.put(node.label, clone);
+        for(int i = 0; i < node.neighbors.size(); i++) {
+            clone.neighbors.add(helper(node.neighbors.get(i), map));
+        }
+        return clone;
+    }
+
+
+    private int maxDiffer() {
+
+        HashSet<Integer> visited = new HashSet<>();
+        int pot = 0;
+
+        for (int i = 0; i < V; i++) {
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
+            pot = Math.max(pot, dfs(i, min, max, 0, visited));
+        }
+
+        return pot;
+    }
+
+    private int dfs(int n, int min, int max, int pot, HashSet<Integer> visited) {
+
+        if(visited.contains(n))
+            return pot;
+
+        visited.add(n);
+        min = Math.min(min,n);
+        max = Math.max(max,n);
+        pot = max - min;
+
+        for(int i = 0; i < adjacency[n].size(); i++) {
+            if(!visited.contains(adjacency[n].get(i))) {
+                pot = Math.max(pot, dfs(adjacency[n].get(i), min, max, pot, visited));
+            }
+        }
+        return pot;
 
     }
+
+
+    public static void main(String[] args) {
+
+        Graph g = new Graph(5);
+
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+//        g.addEdge(1, 4);
+        g.addEdge(3, 4);
+//        g.addEdge(4, 1);
+
+
+        System.out.println(g.maxDiffer());
+        //
+        // 0 -> 1 -> (2)
+        // 0 - 1 - 3 - 4
+    }
+
+
 
 }

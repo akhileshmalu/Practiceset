@@ -4,6 +4,24 @@
  */
 public class AlternateLinkedList {
 
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+
+        public void display() {
+            ListNode head = this;
+            while(head != null) {
+                System.out.print(head.val + " ");
+                head = head.next;
+            }
+            System.out.println();
+        }
+    }
+    
     public static ListNode oddEvenList(ListNode head) {
 
         ListNode odd = head;

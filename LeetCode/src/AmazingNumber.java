@@ -1,3 +1,5 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -8,8 +10,9 @@ import java.util.stream.Collectors;
  */
 public class AmazingNumber {
 
-    /**
-     * // amazing = {rank < index} 4 <> 4 < 0,  1 = 1,1,  2 = 2,2 , 7 <> 7<3;
+    /*
+     *
+     *  Logic: in self balancing tree ; we shall keep a count of right sub tree size.
      * @param p
      * @return
      */
@@ -17,18 +20,18 @@ public class AmazingNumber {
 
         TreeSet<Integer> ts = new TreeSet<>();
 
-        ts.addAll(Arrays.stream(p).boxed().collect(Collectors.toList()));
-
         int count = 0;
 
         for(int i = 0; i< p.length; i++) {
 
-            //System.out.println(p[i] + " rank is " + (ts.headSet(p[i]).size()+1));
-            if((ts.headSet(p[i]).size()) <= i)
-                count++;
+            // step 1: add item and see size of right sub tree
+            ts.add(p[i]);
+
+            // since tailSet includes item itself in set hence -1
+            count += ts.tailSet(p[i]).size()-1;
 
         }
-        System.out.println(count);
+
         return count;
     }
 
@@ -46,6 +49,7 @@ public class AmazingNumber {
             conver += merge(num, mid+1, end);
 
             conver += mergeThem(num, start, mid, end);
+
         }
         return conver;
     }
@@ -66,7 +70,7 @@ public class AmazingNumber {
                 num[index++] = leftSubArray[i++];
             } else {
                 num[index++] = rightSubArray[j++];
-                conver = conver + middle - i;
+                conver = conver + leftSubArray.length - i;
             }
         }
         if(i == leftSubArray.length) {
@@ -83,8 +87,11 @@ public class AmazingNumber {
 
 
     public static void main(String[] args) {
-        int[] p = {4, 1, 2 ,7, 6};
+
+        int[] p = {8, 4, 2, 1};
+
         System.out.println(countOfAmazing(p));
-        System.out.println("with Merge Sort" + inversionCount(p));
+        System.out.println();
+        System.out.println("with Merge Sort " + inversionCount(p));
     }
 }

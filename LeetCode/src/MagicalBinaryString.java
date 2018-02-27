@@ -1,12 +1,76 @@
 /**
  * @author: Akhilesh Maloo
  * @date: 1/28/18.
+ *
+ *
+ *
  */
 public class MagicalBinaryString {
 
     public static void main(String[] args) {
-        String str = "11011000";
-        System.out.println(magicstr(str));
+        String str2 = "11011000";
+
+        String str = "1011";
+
+        int firstHalf = Integer.parseInt(str.substring(0,str.length()/2),2);
+        int sec = Integer.parseInt(str.substring(str.length()/2),2);
+
+
+        int bits1 = Integer.bitCount(Integer.parseInt(str,2));
+        int bits0 = str.length() - bits1;
+        System.out.println(firstHalf + " " + sec + " " + ((bits1) >= bits0 && firstHalf >= sec));
+
+
+//        System.out.println(isMagical(str));
+    }
+
+    public static String largestMagical(String str) {
+
+//        for(int i=0; i<str.length()-1; i++) {
+//            for(int j = i+1; j<str.length(); j++) {
+//                String sub = str.substring(i,j+1);
+//                System.out.println(sub);
+//            }
+//        }
+
+        return "";
+    }
+
+    public static boolean isMagical(String str) {
+
+        /*
+        boolean isMagic = false;
+
+        if(subStr.length() == 1)
+            isMagic = (subStr.equals("1"));
+        else {
+            int bits1 = Integer.bitCount(Integer.parseInt(subStr,2));
+            int bits0 = subStr.length() - bits1;
+            isMagic = (bits1) >= bits0;
+        }
+
+
+        if(subStr.length() > 1)
+        isMagic = isMagic && isMagical(subStr.substring(0,subStr.length()-1));
+
+        if(isMagic)
+            System.out.println(subStr);
+
+        return isMagic;
+        */
+
+        int firstHalf = Integer.parseInt(str.substring(0,str.length()/2),2);
+        int sec = Integer.parseInt(str.substring(str.length()/2),2);
+
+
+        int bits1 = Integer.bitCount(Integer.parseInt(str,2));
+
+        int bits0 = str.length() - bits1;
+
+
+        return ((bits1) >= bits0 && firstHalf >= sec);
+
+
     }
 
     public static String magicstr(String str) {

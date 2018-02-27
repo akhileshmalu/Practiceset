@@ -210,5 +210,6 @@ public class BST {
         q.push(curr.data);
         inorder(curr.right,q);
     }
+
 }
 

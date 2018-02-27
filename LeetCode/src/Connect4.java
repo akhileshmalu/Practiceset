@@ -21,7 +21,8 @@ public class Connect4 {
             this.stateNames = names;
         }
 
-        @Override public String toString() {
+        @Override 
+        public String toString() {
             return stateNames;
         }
 

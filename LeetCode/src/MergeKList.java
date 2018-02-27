@@ -3,6 +3,23 @@
  * @date: 1/14/18.
  */
 public class MergeKList {
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+
+        public void display() {
+            ListNode head = this;
+            while(head != null) {
+                System.out.print(head.val + " ");
+                head = head.next;
+            }
+            System.out.println();
+        }
+    }
 
     ListNode merge(ListNode l1, ListNode l2) {
 

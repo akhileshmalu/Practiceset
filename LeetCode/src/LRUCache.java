@@ -181,18 +181,19 @@ class LinkedHashMapLRU {
 
     LinkedHashMapLRU(int capacity) {
         this.cap = capacity;
-        cache = new LinkedHashMap<Integer, Integer>();
+        cache = new LinkedHashMap<>();
     }
 
     public void set(int key, int val) {
         if(cache.containsKey(key)) {
             cache.remove(key);
+        } else {
+            //remove check only works when entry is new in map
+            if(cache.size() >= cap) {
+                //constant time remove first entry
+                cache.remove((cache.entrySet()).iterator().next().getKey());
+            }
         }
-        if(cache.size() >= cap) {
-            //constant time remove first entry
-            cache.remove((cache.entrySet()).iterator().next().getKey());
-        }
-
         cache.put(key,val);
     }
 

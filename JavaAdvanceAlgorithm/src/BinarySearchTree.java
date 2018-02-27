@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Balancing not applied here. Pls use Red Black Tree for a balanced BST approach
  *
@@ -152,16 +155,77 @@ public class BinarySearchTree {
         return node;
     }
 
+    public int depth() {
+        return depth(root);
+    }
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    public int depth(Node head) {
+        if(head == null)
+            return Integer.MAX_VALUE;
+
+        if(head.left == null && head.right == null)
+            return 0;
+
+        return  1 + Math.min(depth(head.left), depth(head.right));
+    }
+
+    public int findClosest(int ch) {
+        List<Node> ancestor = new ArrayList<>();
+        return findClosest(root, ch, ancestor);
+    }
+
+    /**
+     *  Find closest leaf node
+     * @param head
+     * @param ch
+     * @param ancesstor
+     * @return
+     */
+    public int findClosest(Node head, int ch, List<Node> ancesstor) {
+        if(head == null)
+            return Integer.MAX_VALUE;
+
+        if(head.data == ch) {
+            int min = depth(head);
+
+            for (int i = ancesstor.size()-1; i >= 0; i--) {
+                min = Math.min(min, depth(ancesstor.get(i)) + ancesstor.size() - i + 1);
+            }
+
+            return min;
+        }
+
+        ancesstor.add(head);
+
+        return Math.min(findClosest(head.left, ch, ancesstor), findClosest(head.right, ch, ancesstor));
+    }
+
     public static void main(String[] args) {
 
-        int[] a = {3,1, 5, 2, 6};
+        int[] a = {3, 2, 10, 8, 6, 5, 7, 12, 15, 13 ,17};
         BinarySearchTree bst = new BinarySearchTree();
 
         for(int v: a) {
             bst.insert(v);
         }
 
-        System.out.println(bst.contains(3));
+        /*
+
+                    3
+                2      10
+                     8    12
+                   6         15
+                 5   7    13    17
+         */
+
+// /        System.out.println(bst.contains(3));
+
+        System.out.println(bst.findClosest(12));
 
         //Node r = bst.buildBSTfromSortedArray(a,0,a.length-1);
 

@@ -1,4 +1,4 @@
-package DynamicPragramming;
+package DynamicProgramming;
 
 /**
  * @author: Akhilesh Maloo
@@ -25,7 +25,6 @@ public class LongestPalindromincSubSeq {
                 } else {
                     dp[j][k] = Math.max(dp[j][k-1],dp[j+1][k]);
                 }
-
             }
         }
 

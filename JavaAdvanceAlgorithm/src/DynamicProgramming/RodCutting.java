@@ -1,4 +1,4 @@
-package DynamicPragramming;
+package DynamicProgramming;
 
 /**
  * @author: Akhilesh Maloo

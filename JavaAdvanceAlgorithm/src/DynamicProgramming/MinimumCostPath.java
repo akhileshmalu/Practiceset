@@ -1,6 +1,4 @@
-package DynamicPragramming;
-
-import java.util.Arrays;
+package DynamicProgramming;
 
 /**
  * @author: Akhilesh Maloo

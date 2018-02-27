@@ -6,6 +6,23 @@ import java.util.Stack;
  * @date: 10/25/17.
  */
 public class IsListPalindrom {
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+
+        public void display() {
+            ListNode head = this;
+            while(head != null) {
+                System.out.print(head.val + " ");
+                head = head.next;
+            }
+            System.out.println();
+        }
+    }
 
     public static ListNode reverse(ListNode l) {
         //create a reverse LinkedList and then compare both the lists
@@ -47,7 +64,6 @@ public class IsListPalindrom {
         }
 
         while(prev != null) {
-
             // pick up first element and check with reversed list;
             if(q.poll() != prev.val)
                 return false;
@@ -80,22 +96,7 @@ public class IsListPalindrom {
         ListNode temp = ptr1x;
         ptr1x = null;
         return isIdenticalRecursive(head,reverse(temp));
-        // check if list is even numbered case
-        /*if(ptr2x != null) {
-            ListNode temp = ptr1x.next;
-            ptr1x.next = null;
-            return isIdenticalRecursive(head,reverse(temp));
-        } else {        // odd numbers case
-            ListNode temp = ptr1x.next;
-            ptr1x = null;
-            return isIdenticalRecursive(temp,reverse(ptr1x));
-        }*/
-
-        // ptr1 becomes middle Node & ptr2x becomes last Node
-
     }
-
-
 
 
     public static boolean isIdenticalRecursive(ListNode a, ListNode b) {
@@ -112,7 +113,6 @@ public class IsListPalindrom {
            }
         }
         return true;
-
     }
 
 
@@ -124,8 +124,6 @@ public class IsListPalindrom {
         l1.next.next.next = new ListNode(1);
         l1.next.next.next.next = new ListNode(1);
         l1.next.next.next.next.next = new ListNode(1);
-
-        //        1, 1000000000, -1000000000, -1000000000, 1000000000, 1
 
         System.out.println(isListPalindrome2(l1));
 

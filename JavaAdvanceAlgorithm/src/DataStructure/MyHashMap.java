@@ -1,6 +1,7 @@
 package DataStructure;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author: Akhilesh Maloo
@@ -47,7 +48,7 @@ public class MyHashMap<K, V> {
     }
 
     private int index(K k) {
-        return k.hashCode() % numBucket;
+        return (k.hashCode() & 0x7fffffff) % numBucket;
     }
 
     public boolean containsKey(K k) {

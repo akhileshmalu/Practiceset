@@ -3,6 +3,9 @@ package DesignPatterns;
 /**
  * @purpose: thread-safe Singleton class
  *
+ *  - lazy instantiation
+ *  - avoid overkill of synchronization
+ *
  * @author: Akhilesh Maloo
  * @date: 9/19/17.
  */
@@ -25,6 +28,14 @@ public class Singleton {
              }
         }
 
+        return instance;
+    }
+
+    /**
+     * Restrict Deserialization
+     * @return
+     */
+    protected Object readResolve() {
         return instance;
     }
 

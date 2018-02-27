@@ -4,6 +4,23 @@
  */
 public class SortLinkedList {
 
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+
+        public void display() {
+            ListNode head = this;
+            while(head != null) {
+                System.out.print(head.val + " ");
+                head = head.next;
+            }
+            System.out.println();
+        }
+    }
 
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null)

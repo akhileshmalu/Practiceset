@@ -66,6 +66,11 @@ public class ProductExceptIndex {
 
         productExceptIndex(nums);
 
+        /**
+         * 1=1  1=1   1*5=5  1*5*3=15
+         *  90*1=90    1*18     5*6=30    15*1 = 15
+         */
+
         //getProductsOfAllIntsExceptAtIndex(nums);
 
     }

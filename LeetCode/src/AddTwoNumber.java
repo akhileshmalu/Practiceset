@@ -4,50 +4,54 @@
  */
 public class AddTwoNumber {
 
-    public static ListNode addTwo(ListNode l1, ListNode l2, int carry, ListNode res) {
+    static class ListNode {
+        int val;
+        ListNode next;
 
-        int l1Val = 0, l2Val = 0;
-
-        if(l1 != null)
-            l1Val = l1.val;
-
-        if(l2 != null)
-            l2Val = l2.val;
-
-        if(l1.next == null && l2.next == null) {
-            ListNode n = new ListNode((l1Val + l2Val + carry)%10);
-            carry = (l1Val + l2Val + carry) / 10;
-            if(carry > 0)
-                n.next = new ListNode(carry);
-            return n;
-        } else {
-
-            res = new ListNode((l1Val + l2Val + carry) % 10);
-            carry = (l1Val + l2Val + carry) / 10;
-
-            ListNode nxt1 = new ListNode(0);
-            ListNode nxt2 = new ListNode(0);
-
-            if(l2.next == null) {
-
-                nxt1 = l1.next;
-            } else if(l1.next == null) {
-
-                nxt2 = l2.next;
-            }  else {
-                nxt1 = l1.next;
-                nxt2 = l2.next;
-            }
-
-            res.next = addTwo(nxt1, nxt2, carry, res.next);
-
+        ListNode(int x) {
+            val = x;
         }
-        return res;
+
+        public void display() {
+            ListNode head = this;
+            while(head != null) {
+                System.out.print(head.val + " ");
+                head = head.next;
+            }
+            System.out.println();
+        }
     }
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode res = new ListNode(0);
-        return addTwo(l1,l2, 0, res);
+
+    private int carry = 0;
+
+    /**
+     * Best soltion so far uses above carry; you can create a driver function which can call below recursion with carry too.
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        // base case when both are equal length (compared next) || not equal length (compare null)
+        if((l1.next == null) && (l2.next == null)) {
+
+            ListNode n = new ListNode((l1.val+l2.val+carry)%10);
+
+            if(l1.val + l2.val + carry > 9) {
+                n.next = new ListNode((l1.val+l2.val+carry)/10);
+            }
+            return n;
+        }
+
+        ListNode head = new ListNode((l1.val + l2.val + carry) % 10);
+        carry = (l1.val + l2.val + carry) / 10;
+
+        // new listnode 0 if length of two linked list is not same.
+        head.next = addTwoNumbers((l1.next == null)? new ListNode(0) : l1.next,
+                (l2.next == null)? new ListNode(0) : l2.next);
+
+        return head;
     }
 
 
@@ -83,7 +87,8 @@ public class AddTwoNumber {
 
     public static void main(String[] args) {
 
-        ListNode l1 = new ListNode(1);
+        AddTwoNumber ad = new AddTwoNumber();
+        ListNode l1 = new AddTwoNumber.ListNode(1);
         l1.next = new ListNode(8);
         //l1.next.next = new ListNode(3);
 
@@ -91,28 +96,12 @@ public class AddTwoNumber {
 //        l2.next = new ListNode(6);
 //        l2.next.next = new ListNode(4);
 
-        ListNode l3 = addTwoNumbers(l1,l2);
+        ListNode l3 = ad.addTwoNumbers(l1,l2);
 
         System.out.println(l3.val);
 
     }
 
 }
-class ListNode {
-    int val;
-    ListNode next;
 
-    ListNode(int x) {
-        val = x;
-    }
-
-    public void display() {
-        ListNode head = this;
-        while(head != null) {
-            System.out.print(head.val + " ");
-            head = head.next;
-        }
-        System.out.println();
-    }
-}
 

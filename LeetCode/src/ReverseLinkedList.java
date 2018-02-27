@@ -59,6 +59,16 @@ public class ReverseLinkedList {
 
     }
 
+    public void deleteNode(Node del) {
+        if(del.next != null) {
+            del.value = del.next.value;
+            del.next = del.next.next;
+        } else {
+            throw new IllegalArgumentException("Last Value can't be deleted via this method");
+        }
+
+    }
+
     public static void main(String[] args) {
 
         ReverseLinkedList list = new ReverseLinkedList();
@@ -73,5 +83,7 @@ public class ReverseLinkedList {
         System.out.println("");
         System.out.println("Reversed linked list ");
         list.printList(head);
+
+
     }
 }

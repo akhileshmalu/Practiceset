@@ -36,6 +36,37 @@ public class ValidParenthesis {
 
     }
 
+    /**
+     * Best Solution 6ms
+     * @param s
+     * @return
+     */
+    public boolean isValid2(String s) {
+
+        char[] stack = new char[s.length()];
+        int head = 0;
+        for(char c : s.toCharArray()) {
+            switch(c) {
+                case '{':
+                case '[':
+                case '(':
+                    stack[head++] = c;
+                    break;
+                case '}':
+                    if(head == 0 || stack[--head] != '{') return false;
+                    break;
+                case ')':
+                    if(head == 0 || stack[--head] != '(') return false;
+                    break;
+                case ']':
+                    if(head == 0 || stack[--head] != '[') return false;
+                    break;
+            }
+        }
+        return head == 0;
+
+    }
+
     public static void main(String[] args) {
     ValidParenthesis ex =new ValidParenthesis();
         System.out.println(ex.isValid("(){}"));
