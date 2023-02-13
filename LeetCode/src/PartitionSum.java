@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class PartitionSum {
         Integer[] a = {2, 1, 4, 5, 3};
 
         List<Integer> list = Arrays.asList(a);
+        list.set(0, 1);
+        new ArrayList<Integer>().add(1);
 
         System.out.println(canPartition(list,3));
     }

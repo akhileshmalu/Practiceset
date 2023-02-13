@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: Akhilesh Maloo
@@ -164,11 +161,58 @@ public class LengthOfLargestPalindromSubStr {
     }
 
 
+    public String longestPalindrome2(String s) {
+        if(s == null || s.length() <= 1) {
+            return s;
+        }
+
+        Map<Character, List<Integer>> map = new HashMap<>();
+        char[] arr = s.toCharArray();
+        for(int i = 0; i<arr.length; i++) {
+            List<Integer> indices = map.get(arr[i]);
+            if(indices == null) {
+                indices = new ArrayList<>();
+            }
+            indices.add(i);
+            map.put(arr[i], indices);
+        }
+
+        int maxLength = 0;
+        String maxPalindrom = "";
+        for(List<Integer> list: map.values()) {
+            if(list != null && list.size() > 1) {
+                for(int i = 0; i < list.size()-1; i++) {
+                    for(int lastStr = list.size()-1; lastStr > 0; lastStr--) {
+                        if(palindrom(arr, list.get(i), list.get(lastStr)) && (list.get(lastStr) - list.get(i)) > maxLength) {
+                            maxLength = list.get(lastStr) - list.get(i);
+                            maxPalindrom = s.substring(list.get(i), list.get(lastStr)+1);
+                            break;
+                        }
+                    }
+                    System.out.println(maxPalindrom);
+
+                }
+            }
+        }
+
+        return maxLength == 0 ? s.charAt(0) + "" :maxPalindrom;
+    }
+
+    private boolean palindrom(char[] arr, int start, int end) {
+        for(int i = start, j = end; i <= j; i++,j--) {
+            if(arr[i] != arr[j]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         LengthOfLargestPalindromSubStr st = new LengthOfLargestPalindromSubStr();
         String s = "ccc";
         long t = System.currentTimeMillis();
-        System.out.println(st.largestPalindrom3(s));
+//        System.out.println(st.largestPalindrom3(s));
+        System.out.println(st.longestPalindrome2("abacab"));
         System.out.println( " in time : "+ (System.currentTimeMillis() -t ));
     }
 }

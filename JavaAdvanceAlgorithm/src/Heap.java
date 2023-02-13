@@ -6,21 +6,21 @@ import java.util.*;
  */
 public class Heap implements Iterable<Integer> {
 
-    private int[] values;
+    private Integer[] values;
     private int size;
 
     /**
      * Constructor takes initial array to build a heap
      * @param a
      */
-    Heap(int[] a) {
+    Heap(Integer[] a) {
         size = 0;
         buildHeap(a);
     }
 
     Heap() {
         size = 0;
-        values = new int[1];
+        values = new Integer[1];
     }
 
     /**
@@ -28,9 +28,7 @@ public class Heap implements Iterable<Integer> {
      *
      * @param a
      */
-    public void buildHeap(int[] a) {
-
-        values = new int[a.length];
+    public void buildHeap(Integer[] a) {
         values = Arrays.copyOf(a,a.length);
         size = a.length;
 
@@ -46,7 +44,7 @@ public class Heap implements Iterable<Integer> {
      * @param newSize
      */
     public void resize(int newSize) {
-        int[] newArr = Arrays.copyOf(values,newSize);
+        Integer[] newArr = Arrays.copyOf(values,newSize);
         values = newArr;
     }
 
@@ -202,6 +200,54 @@ public class Heap implements Iterable<Integer> {
         System.out.println();
     }
 
+    void sink(int ind, int n) {
+        int l = 2*(ind) + 1;
+        int r = l + 1;
+        int bigger = ind;
+        if(r < n) { //both exists
+            if(values[l] > values[r]) {
+                bigger = l;
+            } else {
+                bigger = r;
+            }
+        } else if(l < n){
+            bigger = l;
+        }
+        if(values[ind] < values[bigger]) {
+            swap(values, bigger, ind);
+            sink(bigger, n);
+        }
+    }
+
+    void swim(int ind) {
+        int parent = (ind - 1) / 2;
+        if(parent >= 0 && values[parent] < values[ind]) {
+            swap(values, parent, ind);
+            swim(parent);
+        }
+    }
+
+    void insert(int k) {
+        if(size == values.length) resize(size * 2);
+        values[size++] = k;
+        swim(size-1);
+    }
+
+    int pop() {
+        int head = values[0];
+        values[0] = values[size-1];
+        values[size-1] = null;
+        size--;
+        sink(0, size);
+        return head;
+    }
+
+    void swap(Integer[] values, int a, int b) {
+        int tmp = values[a];
+        values[a] = values[b];
+        values[b] = tmp;
+    }
+
     @Override
     public Iterator<Integer> iterator() {
         return new HeapIterator();
@@ -234,19 +280,26 @@ public class Heap implements Iterable<Integer> {
 
 
 
-        Heap hp = new Heap(values);
+//        Heap hp = new Heap(values);
+        Heap hp = new Heap();
+        for(int val: values) {
+            hp.insert(val);
+        }
         //hp.insertItemInHeap(8);
 //        hp.insertItemInHeap(7);
 
         //hp.heapSort();
-
+//        hp.pop();
+        hp.pop();
+        hp.pop();
         for(Integer i: hp)
             System.out.print(i + " ");
-        System.out.println();
 
 
-        Node node = hp.buildTreeFromHeap();
-        System.out.println(node.left.left.data);
+
+
+//        Node node = hp.buildTreeFromHeap();
+//        System.out.println(node.left.left.data);
 
     }
 }

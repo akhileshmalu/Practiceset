@@ -1,5 +1,7 @@
 package DataStructure;
 
+import java.util.HashMap;
+
 /**
  * @author: Akhilesh Maloo
  * @date: 1/12/18.

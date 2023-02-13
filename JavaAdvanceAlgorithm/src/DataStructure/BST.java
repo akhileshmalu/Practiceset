@@ -196,6 +196,48 @@ public class BST {
 
     }
 
+     /* Removes the specified key and its associated value from this symbol table
+     * (if the key is in this symbol table).
+     *
+     * @param  key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(int key) {
+        //if (key == null) throw new IllegalArgumentException("calls delete() with a null key");
+        root = delete(root, key);
+    }
+
+    private Node deleteMin(Node x) {
+        if (x.left == null) return x.right;
+        x.left = deleteMin(x.left);
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    private Node delete(Node x, Integer key) {
+        if (x == null) return null;
+
+        int cmp = key.compareTo(x.data);
+        if      (cmp < 0) x.left  = delete(x.left,  key);
+        else if (cmp > 0) x.right = delete(x.right, key);
+        else {
+            if (x.right == null) return x.left;
+            if (x.left  == null) return x.right;
+            Node t = x;
+            x = min(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    private Node min(Node x) {
+        if (x.left == null) return x;
+        else                return min(x.left);
+    }
+
+
     public Iterable<Integer> inorder() {
         LinkedList<Integer> q = new LinkedList<>();
         inorder(root,q);

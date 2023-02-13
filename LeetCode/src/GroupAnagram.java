@@ -126,25 +126,57 @@ public class GroupAnagram {
         return true;
     }
 
+
+
+    public List<List<String>> groupAnagrams2(String[] strs) {
+        Map<List<Integer>, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            List<Integer> asci = listAscii(str);
+            List<String> strList = map.get(asci);
+            if (strList == null) {
+                strList = new ArrayList<>();
+            }
+            strList.add(str);
+            map.put(asci, strList);
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        result.addAll(map.values());
+        return result;
+    }
+
+    private List<Integer> listAscii(String str) {
+        List<Integer> asci = new ArrayList<>();
+        for(int i = 0; i<str.length(); i++) {
+            asci.add(str.charAt(i) - 'a');
+        }
+        Collections.sort(asci);
+        return asci;
+    }
+
     public static void main(String[] args) {
 
-        List<List<Integer>> result = new ArrayList<>();
-        HashSet<List<Integer>> item = new HashSet<>();
-        List<Integer> a = new ArrayList<>();
-        a.add(1);
-        a.add(2);
-        item.add(a);
+//        List<List<Integer>> result = new ArrayList<>();
+//        HashSet<List<Integer>> item = new HashSet<>();
+//        List<Integer> a = new ArrayList<>();
+//        a.add(1);
+//        a.add(2);
+//        item.add(a);
+//
+//        result.addAll(item.stream().collect(Collectors.toList()));
+//
+//        System.out.println(result);
 
-        result.addAll(item.stream().collect(Collectors.toList()));
-
-        System.out.println(result);
-
-        /*GroupAnagram ga = new GroupAnagram();
+        GroupAnagram ga = new GroupAnagram();
         String[] str = {"eat", "tea", "tan", "ate", "nat", "bat"};
 
         long t = System.currentTimeMillis();
-        ga.groupAnagram(str);
+        System.out.println(ga.groupAnagrams2(str));
+//        ga.groupAnagrams2(str);
         System.out.println("time:" + (System.currentTimeMillis() - t));
-        */
+
+
+
+
     }
 }

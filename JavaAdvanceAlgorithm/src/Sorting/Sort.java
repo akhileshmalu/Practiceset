@@ -1,6 +1,7 @@
 package Sorting;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -107,7 +108,6 @@ public class Sort {
      * @return
      */
     public void partition3wayQS(int[] num, int start, int end, int[] pivotArr) {
-
         int pivot = num[end];
         int pIndex = start;
 

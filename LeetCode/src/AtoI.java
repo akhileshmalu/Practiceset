@@ -33,7 +33,7 @@ public class AtoI {
                 continue;
             }
 
-            //            if(a[j] == '-' && j == 0) {
+//            if(a[j] == '-' && j == 0) {
 //                sign *= -1;
 //            } else if(a[j] == '+' && j == 0) {
 //                sign *= 1;
@@ -94,5 +94,6 @@ public class AtoI {
     public static void main(String[] args) {
         AtoI a = new AtoI();
         System.out.println(a.atoi("     +004500"));
+        String s = String.valueOf(1000);
     }
 }

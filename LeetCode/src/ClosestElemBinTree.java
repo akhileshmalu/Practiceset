@@ -26,7 +26,6 @@ public class ClosestElemBinTree {
 
     }
 
-
     public static void main(String[] args) {
 
         ClosestElemBinTree bt = new ClosestElemBinTree();
@@ -39,7 +38,17 @@ public class ClosestElemBinTree {
         head.right.right = new Node(22);
         head.right.right.left = new Node(20);
 
-        System.out.println(getClosestNumber(12,head));
+
+        /**
+         *
+         *              9
+         *            4   17
+         *          3  6     22
+         *                 20
+         */
+
+        System.out.println(getClosestNumber(18,head));
+
 
     }
 }

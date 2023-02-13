@@ -73,6 +73,7 @@ public class KMostFreqItems {
             return (Integer)b.getValue() - (Integer)a.getValue();
         });
 
+
         HashMap<Integer, Integer> map = new HashMap<>();
         // keep a count
         for(int i : nums) {
@@ -135,5 +136,6 @@ public class KMostFreqItems {
     public static void main(String[] args) {
         int[] num = {1,1,1,1,2,2,3};
         System.out.println(topKFrequent2(num,2));
+
     }
 }

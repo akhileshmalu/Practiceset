@@ -80,6 +80,18 @@ public class IntegerToEnglish {
     }
 
     public static void main(String[] args) {
-        System.out.println(numberToWords(1012023));
+
+
+        HashClass hclass = new HashClass();
+
+        hclass.insert(1,5);
+        hclass.insert(2, 8);
+        hclass.insert(1,7);
+        hclass.insert(18, 2);
+
+
+        System.out.println(hclass.getVal(18));
+
+//        System.out.println(numberToWords(1012023));
     }
 }

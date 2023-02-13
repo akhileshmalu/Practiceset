@@ -49,8 +49,6 @@ public class BinarySearchTree {
 
         n.size = size(n.left) + size(n.right) + 1;
 
-
-
         return n;
     }
 

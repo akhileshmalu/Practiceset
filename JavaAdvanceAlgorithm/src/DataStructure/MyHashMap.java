@@ -1,7 +1,10 @@
 package DataStructure;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author: Akhilesh Maloo
@@ -35,6 +38,8 @@ public class MyHashMap<K, V> {
         }
     }
 
+
+
     ArrayList<HashNode<K, V>> bucket;
     private int numBucket = 17;
     private int size;
@@ -52,19 +57,7 @@ public class MyHashMap<K, V> {
     }
 
     public boolean containsKey(K k) {
-        int i = index(k);
-        HashNode tmp = bucket.get(i);
-        if (tmp != null) {
-
-            while (tmp != null) {
-                if (tmp.key.equals(k)) {
-                    return true;
-                }
-                tmp = tmp.next;
-            }
-        }
-        return false;
-
+        return get(k) != null;
     }
 
     public void put(K k, V v) {
@@ -162,7 +155,6 @@ public class MyHashMap<K, V> {
         return null;
     }
 
-
     public static void main(String[] args) {
 
 //        SeparateChainingHashMap<Integer, String> map = new SeparateChainingHashMap<>();
@@ -177,6 +169,7 @@ public class MyHashMap<K, V> {
 
         System.out.println(map.remove(1));
         System.out.println(map.get(1));
+
 
 
     }
