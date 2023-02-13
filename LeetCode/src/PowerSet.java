@@ -131,14 +131,37 @@ public class PowerSet {
         }
     }
 
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
+        backtrackCombi(candidates, 0, target, new ArrayList<Integer>(), result);
+        return result;
+    }
+
+    public void backtrackCombi(int[] vals, int index, int target, List<Integer> tmpList, List<List<Integer>> res) {
+        if(target < 0) return;
+        if(target == 0) {
+            res.add(new ArrayList<>(tmpList));
+            return;
+        }
+        for(int i = index; i < vals.length; i++) {
+            if(i > 0 && vals[i] == vals[i-1]) continue;
+            tmpList.add(vals[i]);
+            backtrackCombi(vals, i, target - vals[i], tmpList, res);
+            tmpList.remove(tmpList.size()-1);
+        }
+
+
+    }
+
 
     public static void main(String[] args) {
         int[] nums = {1, 2, 3};
 
-        powerSet(nums);
+//        powerSet(nums);
 
         permute(nums);
 
-        subsets3(nums);
+//        subsets3(nums);
     }
 }

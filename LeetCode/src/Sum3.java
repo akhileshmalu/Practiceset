@@ -166,10 +166,57 @@ public class Sum3 {
     }
 
 
+
+
+    private int binarySearch(int[] nums, int start, int end, int target) {
+        int left = start;
+        int right = end;
+
+        while(left <= right) {
+
+            int mid = left + (right - left) / 2;            // (left + right) / 2;
+
+            if( target < nums[mid]) {
+                right = mid-1;
+            } else if(target > nums[mid]) {
+                left = mid+1;
+            } else {
+                return mid;
+            }
+        }
+
+        return -1;
+    }
+
+    public List<List<Integer>> threeSum3(int[] nums) {
+        Set<List<Integer>> set = new HashSet<>();
+        Arrays.sort(nums);
+
+        for(int i = 0; i < nums.length-1; i++) {
+            for(int j = i+1; j < nums.length; j++) {
+                if(j < nums.length-1) {
+                    int index = binarySearch(nums, j+1, nums.length-1, -(nums[i] + nums[j]));
+                    if(index > -1) {
+                        List<Integer> tripplet = new ArrayList<>();
+                        tripplet.add(nums[i]);
+                        tripplet.add(nums[j]);
+                        tripplet.add(nums[index]);
+                        set.add(tripplet);
+                    }
+                }
+            }
+        }
+
+        return new ArrayList<>(set);
+    }
+
+
     public static void main(String[] args) {
         int val[] = {1,2,3};
 // /        System.out.println(threeSum2(val));
         //sum3(val);
 
+        int[] nums = {-1,0,1,2,-1,-4};
+        System.out.println(new Sum3().threeSum3(nums));
     }
 }

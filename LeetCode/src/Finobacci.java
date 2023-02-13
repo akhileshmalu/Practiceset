@@ -172,11 +172,37 @@ public class Finobacci {
 
     }
 
+    static int power2(int base, int pow, Integer[] dp) {
+        if(pow == 0) return 1;
+        if(dp[pow] != null) {
+            return dp[pow];
+        }
+        int res = power2(base, pow/2, dp) * power2(base, pow/2, dp);
+        if(pow % 2 == 1) {
+            res *= base;
+        }
+        dp[pow] = res;
+        return res;
+    }
+
+    static int power2(int base, int pow) {
+        int res = 1;
+        while(pow > 0) {
+            res *= base * base;
+            if(pow % 2 == 1) {
+                res *= base;
+            }
+            pow = pow/2;
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         int n = 12;
         mem = new long[n+1];
-        System.out.println(fibonacciWithMetrics(n));
+//        System.out.println(fibonacciWithMetrics(n));
+        System.out.println(power2(3, 10));
     }
 
 

@@ -7,10 +7,30 @@ import java.util.Vector;
 public class enumExample {
 
     enum RainBowColor {
-        Voilet, Indigo, Blue, Green, Yello, Orange, Red;
+        Voilet("Voilet"),
+        Indigo("Indigo"),
+        Blue("Blue"),
+        Green("Green"),
+        Yello("Yello"),
+        Orange("Orange"),
+        Red("Red");
+
+        public String getName() {
+            return this.name;
+        }
+
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String name;
 
         RainBowColor() {
             System.out.println("Color of Rainbow : " + this.toString());
+        }
+        RainBowColor(String color) {
+            this.name = color;
         }
     }
 

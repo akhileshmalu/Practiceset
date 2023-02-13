@@ -95,6 +95,8 @@ public class PrintDiagnoalBinaryTree {
         System.out.println();
         tree.printDiagnoalBT2(root);
 
+
+
     }
 }
 

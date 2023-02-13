@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  */
 public class IdentifyComments {
     public static void main(String[] args) throws IOException {
+
         String regex = "((//[^\n\r]*)|(/\\*(.+?)\\*/))";
         Pattern p = Pattern.compile(regex, Pattern.DOTALL);
 

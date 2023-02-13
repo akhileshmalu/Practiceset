@@ -31,7 +31,7 @@ public class Power {
         double temp=x;
         if(m==0)
             return 1;
-        temp=Pow(x,m/2);
+        temp = Pow(x,m/2);
         if(m%2==0)
             return temp*temp;
         else
@@ -93,9 +93,24 @@ public class Power {
             return myPow(x*x, n/2)*x;
     }
 
+    public static double powr(double base, long ex) {
+        double ans  = 1;
+
+        while(ex != 0) {
+            if(ex % 2 == 1) {
+                ans *= base;
+            }
+            ex /= 2;
+            base *= base;
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         Power pow = new Power();
         System.out.println(pow.FastestmyPow(2,
-                -271271212));
+                10));
+        System.out.println(pow.powr(2,
+                10));
     }
 }

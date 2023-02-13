@@ -9,7 +9,7 @@ import java.util.*;
 public class Graph {
 
     private int V;
-    LinkedList<Integer> adjacency[];
+    LinkedList<Integer>[] adjacency;
 
     Graph(int vertex) {
         this.V = vertex;
@@ -234,16 +234,53 @@ public class Graph {
 
         g.addEdge(0, 1);
         g.addEdge(1, 2);
-//        g.addEdge(1, 4);
-        g.addEdge(3, 4);
-//        g.addEdge(4, 1);
+        g.addEdge(1, 4);
+//        g.addEdge(3, 4);
+        g.addEdge(4, 3);
 
 
-        System.out.println(g.maxDiffer());
+        ;
+
+        System.out.println(g.hasPath2(0, 3));
         //
         // 0 -> 1 -> (2)
         // 0 - 1 - 3 - 4
     }
+
+    boolean hasPath2(int src, int dest) {
+        LinkedList<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[V];
+        q.add(src);
+        visited[src] = true;
+
+        Iterator<Integer> iterator = q.iterator();
+        while(iterator.hasNext()) {
+            Integer pop = q.poll();
+            if(pop != null && pop == dest) {
+                return true;
+            }
+            for (Integer con : adjacency[pop]) {
+                if(!visited[con]) {
+                    q.add(con);
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean DFS2(int src, int dest, boolean[] visited) {
+        visited[src] = true;
+        if(src == dest) {
+            return true;
+        }
+        for (Integer con : adjacency[src]) {
+            if(!visited[con] && DFS2(con, dest, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 

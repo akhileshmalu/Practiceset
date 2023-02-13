@@ -45,6 +45,6 @@ public class MySqrt {
 
     public static void main(String[] args) {
         MySqrt mySqrt = new MySqrt();
-        System.out.println(mySqrt.Sqrt2(10000));
+        System.out.println(mySqrt.Sqrt(10000));
     }
 }
